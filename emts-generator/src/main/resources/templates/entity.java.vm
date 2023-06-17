@@ -1,0 +1,39 @@
+#if($module)
+package com.emts.entity.${module};
+#else
+package com.emts.entity;
+#end
+
+import com.emts.entity.basic.BaseEntity;
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
+import lombok.Data;
+import lombok.ToString;
+import io.swagger.annotations.ApiModel;
+import java.util.Date;
+import com.baomidou.mybatisplus.annotation.TableName;
+
+
+/**
+ * @Author ${author}
+ * @Date ${date}
+ *
+ * @Description $!{table.comment}
+ */
+@Data
+@ToString
+@TableName("${table.name}")
+@ApiModel(value = "${entity}", description = "${entity}对象 $!{table.comment}")
+public class ${entity} extends BaseEntity {
+
+#foreach($field in ${table.fields})
+    #if(${field.keyFlag})
+    @TableId(value = "${field.name}", type = IdType.AUTO)
+    #elseif(${field.convert})
+    @TableField("${field.name}")
+    #end
+    private ${field.propertyType} ${field.propertyName};
+
+#end
+}

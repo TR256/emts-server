@@ -1,0 +1,20 @@
+#if($module)
+package com.emts.service.${module};
+
+import com.emts.entity.${module}.${entity};
+#else
+package com.emts.service;
+
+import com.emts.entity.${entity};
+#end
+import com.baomidou.mybatisplus.extension.service.IService;
+
+/**
+ * @Author ${author}
+ * @Date ${date}
+ *
+ * @Description ${table.comment}
+ */
+public interface ${table.serviceName} extends IService<${entity}> {
+
+}

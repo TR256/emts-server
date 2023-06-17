@@ -1,0 +1,25 @@
+#if($module)
+package com.emts.service.impl.${module};
+
+import com.emts.entity.${module}.${entity};
+import com.emts.service.${module}.${table.serviceName};
+#else
+package com.emts.service.impl;
+
+import com.emts.entity.${entity};
+import com.emts.service.${table.serviceName};
+#end
+import com.baomidou.mybatisplus.extension.service.IService;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.springframework.stereotype.Service;
+
+/**
+ * @Author ${author}
+ * @Date ${date}
+ *
+ * @Description ${table.comment}
+ */
+@Service
+public class ${table.serviceImplName} extends ServiceImpl<${table.mapperName}, ${entity}> implements ${table.serviceName}  {
+
+}

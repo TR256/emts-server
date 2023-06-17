@@ -1,0 +1,29 @@
+#if($module)
+package com.emts.service.${module};
+
+import com.emts.entity.${module}.${entity};
+import com.emts.service.${module}.${table.serviceName};
+#else
+        package com.emts.service;
+
+import com.emts.entity.${entity};
+import com.emts.service.${table.serviceName};
+#end
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+/**
+ * $!{table.comment}
+ * @author ${author}
+ * @since ${date}
+ */
+@RestController
+@RequestMapping("/${table.entityPath}" )
+public class ${table.controllerName} {
+
+    private final String prefix = "/${table.entityPath}";
+
+    @Autowired
+    private ${table.serviceName} ${table.entityPath}Service;
+
+}

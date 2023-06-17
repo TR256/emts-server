@@ -1,0 +1,22 @@
+#if($module)
+package com.emts.dao.${module};
+
+import com.emts.entity.${module}.${entity};
+#else
+package com.emts.dao;
+
+import com.emts.entity.${entity};
+#end
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import org.apache.ibatis.annotations.Mapper;
+
+/**
+ * @Author ${author}
+ * @Date ${date}
+ *
+ * @Description ${table.comment}
+ */
+@Mapper
+public interface ${table.mapperName} extends BaseMapper<${entity}> {
+
+}

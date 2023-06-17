@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+#if($module)
+<mapper namespace="com.emts.dao.${module}.${table.mapperName}">
+    <resultMap id="baseResultMap" type="com.emts.entity.${module}.${entity}">
+#else
+<mapper namespace="com.emts.dao.${table.mapperName}">
+    <resultMap id="baseResultMap" type="com.emts.entity.${entity}">
+#end
+##生成普通字段
+#foreach($field in ${table.fields})
+    #if(${field.keyFlag})
+        <id column="${field.name}" property="${field.propertyName}"/>
+    #end
+#end
+
+##生成普通字段
+#foreach($field in ${table.fields})
+    #if(!${field.keyFlag})
+        <result column="${field.name}" property="${field.propertyName}"/>
+    #end
+#end
+##生成公共字段
+#foreach($field in ${table.commonFields})
+    <result column="${field.name}" property="${field.propertyName}"/>
+#end
+    </resultMap>
+
+</mapper>
