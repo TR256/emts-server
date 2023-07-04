@@ -1,0 +1,16 @@
+server:
+  port: 8090
+  servlet:
+    context-path: /emts
+
+spring:
+  datasource:
+    password: root
+    username: root
+    url: jdbc:mysql://localhost:3306/emts?useUnicode=true&characterEncoding=utf-8&serverTimezone=GMT%2B8
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+mybatis-plus:
+  configuration:
+    # 分页插件
+    page-helper: true

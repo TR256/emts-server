@@ -2,16 +2,20 @@
 package com.emts.service.impl.${module};
 
 import com.emts.entity.${module}.${entity};
+import com.emts.dao.${module}.${table.mapperName};
 import com.emts.service.${module}.${table.serviceName};
 #else
 package com.emts.service.impl;
 
 import com.emts.entity.${entity};
+import com.emts.dao.${table.mapperName};
 import com.emts.service.${table.serviceName};
 #end
-import com.baomidou.mybatisplus.extension.service.IService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import org.springframework.stereotype.Service;
+import org.springframework.beans.factory.annotation.Autowired;import org.springframework.stereotype.Service;
+
+
+#set($entityName = ${entity.substring(${prefix.length()}, ${prefix.length()} + 1).toLowerCase()}+${entity.substring(${prefix.length()}+1, ${entity.length()} - 6)})
 
 /**
  * @Author ${author}
@@ -22,4 +26,6 @@ import org.springframework.stereotype.Service;
 @Service
 public class ${table.serviceImplName} extends ServiceImpl<${table.mapperName}, ${entity}> implements ${table.serviceName}  {
 
+    @Autowired
+    private ${table.mapperName} ${entityName}Mapper;
 }

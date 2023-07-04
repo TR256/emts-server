@@ -1,5 +1,5 @@
 #if($module)
-package com.emts.service.${module};
+package com.emts.web.${module};
 
 import com.emts.entity.${module}.${entity};
 import com.emts.service.${module}.${table.serviceName};
@@ -9,8 +9,17 @@ import com.emts.service.${module}.${table.serviceName};
 import com.emts.entity.${entity};
 import com.emts.service.${table.serviceName};
 #end
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.emts.common.result.Result;
+import com.emts.common.result.ResultBuilder;
+import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+import java.util.Map;
+
+#set($entityName = ${entity.substring(${prefix.length()}, ${prefix.length()} + 1).toLowerCase()}+${entity.substring(${prefix.length()}+1, ${entity.length()} - 6)})
 
 /**
  * $!{table.comment}
@@ -18,12 +27,46 @@ import org.springframework.web.bind.annotation.*;
  * @since ${date}
  */
 @RestController
-@RequestMapping("/${table.entityPath}" )
+@RequestMapping(value = {"/${module}/${entityName}"},
+        produces = MediaType.APPLICATION_JSON_VALUE)
+@Api(value = "${table.controllerName}", produces = MediaType.APPLICATION_JSON_VALUE)
 public class ${table.controllerName} {
 
-    private final String prefix = "/${table.entityPath}";
-
     @Autowired
-    private ${table.serviceName} ${table.entityPath}Service;
+    private ${table.serviceName} ${entityName}Service;
+
+    @GetMapping("/detail/{id}")
+    public Result getEntityDetail(@PathVariable Long id) {
+        ${entity} entity = ${entityName}Service.getById(id);
+        return ResultBuilder.success(entity);
+    }
+
+    @GetMapping("/page")
+    public Result getEntityPage(@RequestParam(defaultValue = "1") Integer pageNum,
+                                @RequestParam(defaultValue = "10") Integer pageSize,
+                                @RequestBody ${entity} entity) {
+        Page<Map<String, Object>> page = new Page<>(pageNum, pageSize);
+        QueryWrapper<${entity}> entityQueryWrapper = new QueryWrapper<>(entity);
+        ${entityName}Service.pageMaps(page, entityQueryWrapper);
+        return ResultBuilder.success(page);
+    }
+
+    @PostMapping("/save")
+    public Result saveEntity(@RequestBody ${entity} entity) {
+        boolean saveResult = ${entityName}Service.save(entity);
+        return ResultBuilder.buildResult(saveResult);
+    }
+
+    @PutMapping("/update/{id}")
+    public Result updateEntity(@RequestBody ${entity} entity) {
+        boolean updateResult = ${entityName}Service.updateById(entity);
+        return ResultBuilder.buildResult(updateResult);
+    }
+
+    @DeleteMapping("/remove/{id}")
+    public Result deleteEntity(@PathVariable Long id) {
+        boolean removeResult = ${entityName}Service.removeById(id);
+        return ResultBuilder.buildResult(removeResult);
+    }
 
 }

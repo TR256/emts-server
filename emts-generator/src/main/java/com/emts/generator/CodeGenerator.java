@@ -150,9 +150,10 @@ public class CodeGenerator {
                             .formatServiceImplFileName("%sServiceImpl")
                             .entityBuilder()
                             .formatFileName("%sEntity")
-                            .addSuperEntityColumns("version", "create_by", "create_time", "update_by", "update_time", "enabled")
+                            .addSuperEntityColumns("version", "created_by", "created_time", "updated_by", "updated_time", "enabled")
                             .enableLombok()
                             .enableTableFieldAnnotation()
+                            .addIgnoreColumns("version", "created_by", "created_time", "updated_by", "updated_time", "enabled")
                             .controllerBuilder()
                             // 映射路径使用连字符格式，而不是驼峰
                             .enableHyphenStyle()
@@ -164,6 +165,8 @@ public class CodeGenerator {
                             .superClass(BaseMapper.class)
                             .formatMapperFileName("%sMapper")
                             .enableMapperAnnotation()
+                            .enableBaseResultMap()
+                            .enableBaseColumnList()
                             .formatXmlFileName("%sMapper");
                 })
                 .injectionConfig(builder -> {
@@ -180,21 +183,42 @@ public class CodeGenerator {
 
         List<String> questionTableList = new ArrayList<>();
         questionTableList.add("tq_question");
+        questionTableList.add("tq_choice");
         questionTableList.add("tq_choice_option");
         questionTableList.add("tq_explanation");
         questionTableList.add("tq_fill");
         questionTableList.add("tq_judge");
-        questionTableList.add("tq_material");
         questionTableList.add("tq_problem");
+        questionTableList.add("tq_course");
+        questionTableList.add("tq_category");
+        questionTableList.add("tq_knowledge");
+        questionTableList.add("tq_chapter");
+        questionTableList.add("tq_user_question_node");
         questionTableList.add("tq_user_answer_history");
         questionTableList.add("tq_user_question_sign");
-        Map<String, Object> map = new HashMap<>();
-        map.put("module", "question");
-//        generateServerCode(questionTableList, map);
+        Map<String, Object> questionMap = new HashMap<>();
+        questionMap.put("module", "question");
+        questionMap.put("prefix", "tq");
+        generateServerCode(questionTableList, questionMap);
 
 
-        generateVueCode("tq_question", "question");
+//        generateVueCode("tq_question", "question");
         //
+        List<String> systemTableList = new ArrayList<>();
+        systemTableList.add("sys_dict");
+        systemTableList.add("sys_dict_item");
+        systemTableList.add("sys_resource");
+        systemTableList.add("sys_role");
+        systemTableList.add("sys_role_resource");
+        systemTableList.add("sys_user");
+        systemTableList.add("sys_user_group");
+        systemTableList.add("sys_user_of_group");
+        systemTableList.add("sys_user_profile");
+        systemTableList.add("sys_user_role");
+        Map<String, Object> systemMap = new HashMap<>();
+        systemMap.put("module", "system");
+        systemMap.put("prefix", "sys");
+        generateServerCode(systemTableList, systemMap);
     }
 
 }
