@@ -35,30 +35,30 @@ public class ${table.controllerName} {
     @Autowired
     private ${table.serviceName} ${entityName}Service;
 
-    @GetMapping("/detail/{id}")
+    @RequestMapping("/detail/{id}")
     public Result getEntityDetail(@PathVariable Long id) {
         ${entity} entity = ${entityName}Service.getById(id);
         return ResultBuilder.success(entity);
     }
 
-    @GetMapping("/page")
+    @RequestMapping("/page")
     public Result getEntityPage(@RequestParam(defaultValue = "1") Integer pageNum,
                                 @RequestParam(defaultValue = "10") Integer pageSize,
-                                @RequestBody ${entity} entity) {
-        Page<Map<String, Object>> page = new Page<>(pageNum, pageSize);
+                                ${entity} entity) {
+        Page<${entity}> page = new Page<>(pageNum, pageSize);
         QueryWrapper<${entity}> entityQueryWrapper = new QueryWrapper<>(entity);
-        ${entityName}Service.pageMaps(page, entityQueryWrapper);
+        ${entityName}Service.page(page, entityQueryWrapper);
         return ResultBuilder.success(page);
     }
 
     @PostMapping("/save")
-    public Result saveEntity(@RequestBody ${entity} entity) {
+    public Result saveEntity(${entity} entity) {
         boolean saveResult = ${entityName}Service.save(entity);
         return ResultBuilder.buildResult(saveResult);
     }
 
-    @PutMapping("/update/{id}")
-    public Result updateEntity(@RequestBody ${entity} entity) {
+    @PostMapping("/update/{id}")
+    public Result updateEntity(${entity} entity) {
         boolean updateResult = ${entityName}Service.updateById(entity);
         return ResultBuilder.buildResult(updateResult);
     }

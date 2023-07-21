@@ -4,7 +4,7 @@ package com.emts.common.result;
 public class ResultBuilder {
 
     public static Result success() {
-        return new Result(ResultEnum.SUCCESS.getCode(), ResultEnum.SUCCESS.getMessage(), null);
+        return new Result(ResultEnum.SUCCESS.getCode(), ResultEnum.SUCCESS.getMessage(), true);
     }
 
 
@@ -13,7 +13,7 @@ public class ResultBuilder {
     }
 
     public static Result error() {
-        return new Result(ResultEnum.COMMON_ERROR.getCode(), ResultEnum.COMMON_ERROR.getMessage(), null);
+        return new Result(ResultEnum.COMMON_ERROR.getCode(), ResultEnum.COMMON_ERROR.getMessage(), false);
     }
 
     public static Result error(Object data) {

@@ -14,3 +14,12 @@ mybatis-plus:
   configuration:
     # 分页插件
     page-helper: true
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+## 设置debug可以打印Sql语句
+logging:
+  level:
+    com:
+      emts:
+        dao:
+          mapper: debug
